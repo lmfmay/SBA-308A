@@ -12,6 +12,7 @@
 
 
 const categorySelect = document.getElementById(`category`);
+const wordList = document.getElementById(`wordList`);
 
 // Use the fetch API or Axios to communicate with an external web API. Use the data provided by this API to populate your application’s content and features.
 // Create user interaction with the API through a search feature, paginated gallery, or similar. This feature should use GET requests to retrieve associated data.
@@ -27,3 +28,19 @@ async function loadCategories() {
     });
 }
 loadCategories()
+
+categorySelect.addEventListener(`change`,categoryHandler)
+
+async function categoryHandler(){
+    const response = await axios.get(`https://www.wordgamedb.com/api/v1/words/`);
+    let words = response.data;
+    let category = categorySelect.value
+    console.log(words)
+    words.forEach(word => {
+        
+        if (word.category==category){
+            let wordListItems = document.createElement(`li`);
+            wordList.appendChild(wordListItems)
+        }
+    });
+}
