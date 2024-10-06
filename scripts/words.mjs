@@ -1,3 +1,4 @@
+
 export function clearWords(){
     const wordDiv = document.querySelector("#wordList");
     while (wordDiv.firstChild) {
@@ -5,9 +6,10 @@ export function clearWords(){
     }
 } 
 
-export function createWord(){
+export function createWord(word){
     let wordListItems = document.createElement(`div`);
-    let wordListItem = wordListItems.createElement(`li`);
-    wordListItem.innerHTML=word.word;
-    wordList.appendChild(wordListItem);
+    let wordListItem = document.createElement(`li`);
+    wordListItem.innerHTML=word;
+    wordListItems.appendChild(wordListItem);
+    return wordListItems
 }

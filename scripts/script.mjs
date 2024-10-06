@@ -38,7 +38,8 @@ async function categoryHandler(){
     Words.clearWords()
     words.forEach(word => {
         if (word.category===category){
-            Words.createWord()  
+            wordList.appendChild(Words.createWord(word.word));
         }
     });
+    console.log(wordList)
 }
