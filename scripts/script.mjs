@@ -1,4 +1,4 @@
-
+import * as Words from "./words.mjs";
 
 // Enable user manipulation of data within the API through the use of POST, PUT, or PATCH requests. Ensure your chosen API supports this feature before beginning.
 
@@ -35,12 +35,10 @@ async function categoryHandler(){
     const response = await axios.get(`https://www.wordgamedb.com/api/v1/words/`);
     let words = response.data;
     let category = categorySelect.value
-    console.log(words)
+    Words.clearWords()
     words.forEach(word => {
-        
-        if (word.category==category){
-            let wordListItems = document.createElement(`li`);
-            wordList.appendChild(wordListItems)
+        if (word.category===category){
+            Words.createWord()  
         }
     });
 }
