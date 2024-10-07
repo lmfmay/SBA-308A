@@ -48,9 +48,9 @@ async function categoryHandler(){
         });
         let wordListStr = wordListItems.toString()
         wordCloud(wordListStr)
-} catch (error) {
-    console.log(error);
-}
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function wordCloud(text) {
