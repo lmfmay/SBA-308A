@@ -33,12 +33,13 @@ async function categoryHandler(){
         let words = response.data;
         let category = categorySelect.value
         let searchCat = Search.searchHandler()
+        
         //error handling if search term is not in API data
         let isValidCategory = words.some(word => word.category === searchCat);
-        if (!isValidCategory) {
+        if (!isValidCategory && searchCat!=``) {
             wordCloudContain.innerHTML=`Please search for only the following categories: animal, country, food, plant, sport.`
             throw new Error("This API only supports the following categories: animal, country, food, plant, sport.");
-        }
+        }        
         Words.clearWords()
         words.forEach(word => {
             if (word.category===category || word.category===searchCat){
@@ -47,11 +48,10 @@ async function categoryHandler(){
         });
         let wordListStr = wordListItems.toString()
         wordCloud(wordListStr)
-    } catch (error) {
-        console.log(error);
-    }
+} catch (error) {
+    console.log(error);
 }
-
+}
 
 async function wordCloud(text) {
     const response = await axios.get(`https://quickchart.io/wordcloud?text=${text}`)
