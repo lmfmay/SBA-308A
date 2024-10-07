@@ -23,4 +23,5 @@ This project showcases my capability to implement advanced JavaScript tools and 
     - **git remote -v # confirm the changes**
 
 ## Acknowledgements
-- 
+- https://quickchart.io/documentation/word-cloud-api/
+- https://www.wordgamedb.com/endpoints

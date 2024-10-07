@@ -14,13 +14,15 @@
 </head>
 <body>
     <h2>Select a word category</h2>
-    <form action="push">
+    <form action="push" id="formData">
         <select name="catgory" id="category">
             <option value="" disabled selected>Select your category</option>
-        </select>
+        </select><br>
+        <input type="submit" value="Generate Word Cloud">
+        <ul id="wordList">
+            <div id="wordDiv"></div>
+        </ul>
     </form>
-    <ul id="wordList">
-        <div id="wordDiv"></div>
-    </ul>
+    <img src="" alt="" id="wordCloudImg">
 </body>
 </html>
