@@ -16,7 +16,7 @@ const categorySelect = document.getElementById(`category`);
 const wordList = document.getElementById(`wordList`);
 const formData = document.getElementById(`formData`);
 let wordCloudContain = document.getElementById(`wordCloudContain`);
-let wordCloudImg = document.getElementById(`wordCloudImg`);
+//let wordCloudImg = document.getElementById(`wordCloudImg`);
 //const fs = require('fs').promises;  // Promises-based file system API
 
 // Use the fetch API or Axios to communicate with an external web API. Use the data provided by this API to populate your application’s content and features.
@@ -49,7 +49,7 @@ async function categoryHandler(){
         }
     });
     let wordListStr = wordListItems.toString()
-    console.log(wordListStr)
+    //console.log(wordListStr)
     wordCloud(wordListStr)
 }
 
@@ -58,13 +58,13 @@ async function wordCloud(text) {
     wordCloudContain.innerHTML = response.data;
 }
 
-function submitHandler(e) {
-    e.preventDefault();
-    wordCloud(categoryHandler());
-}
+// function submitHandler(e) {
+//     e.preventDefault();
+//     wordCloud(categoryHandler());
+// }
 
-function setAttributes(el, attrs) {
-    for(let key in attrs) {
-      el.setAttribute(key, attrs[key]);
-    }
-  }
+// function setAttributes(el, attrs) {
+//     for(let key in attrs) {
+//       el.setAttribute(key, attrs[key]);
+//     }
+//   }
