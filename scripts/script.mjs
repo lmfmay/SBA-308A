@@ -15,6 +15,7 @@ import { wordListItems} from "./words.mjs";
 const categorySelect = document.getElementById(`category`);
 const wordList = document.getElementById(`wordList`);
 const formData = document.getElementById(`formData`);
+let wordCloudContain = document.getElementById(`wordCloudContain`);
 let wordCloudImg = document.getElementById(`wordCloudImg`);
 //const fs = require('fs').promises;  // Promises-based file system API
 
@@ -53,24 +54,8 @@ async function categoryHandler(){
 }
 
 async function wordCloud(text) {
-    const response = await axios.get(`https://quickchart.io/wordcloud?text=${text}`
-    // , {
-    //     'format': 'png',
-    //     'width': 1000,
-    //     'height': 1000,
-    //     'fontScale': 15,
-    //     'scale': 'linear',
-    //     //'useWordList': true,
-    //     'text': wordListItems.flat()
-    // }, {
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //       },
-    //       responseType: 'arraybuffer'  // This is important to handle binary data (image)
-    )
-    //setAttributes(wordCloudImg,response.data)
-    console.log(response.data)
-    wordCloudImg.setAttribute("src",response.data)
+    const response = await axios.get(`https://quickchart.io/wordcloud?text=${text}`)
+    wordCloudContain.innerHTML = response.data;
 }
 
 function submitHandler(e) {
