@@ -1,28 +1,13 @@
+// Organize your JavaScript code into at least three (3) different module files, and import functions and data across files as necessary.
 import * as Words from "./words.mjs";
 import * as Search from "./search.mjs"
 import { wordListItems} from "./words.mjs";
 import { searchInput } from "./search.mjs";
 
-// Enable user manipulation of data within the API through the use of POST, PUT, or PATCH requests. Ensure your chosen API supports this feature before beginning.
-
-// Organize your JavaScript code into at least three (3) different module files, and import functions and data across files as necessary.
-// Ensure the program runs as expected, without any undesired behavior caused by misunderstanding of the JavaScript event loop (such as race conditions, API calls being handled out of order, etc.).
-// Create an engaging user experience through the use of HTML and CSS.
-// Ensure that the program runs without errors (comment out things that do not work, and explain your blockers - you can still receive partial credit).
-// Commit frequently to the git repository.
-// Include a README file that contains a description of your application.
-// Level of effort displayed in creativity, presentation, and user experience
-
-
 const categorySelect = document.getElementById(`category`);
-//const wordList = document.getElementById(`wordList`);
-// const formData = document.getElementById(`formData`);
 let wordCloudContain = document.getElementById(`wordCloudContain`);
-//let wordCloudImg = document.getElementById(`wordCloudImg`);
-//const fs = require('fs').promises;  // Promises-based file system API
 
 // Use the fetch API or Axios to communicate with an external web API. Use the data provided by this API to populate your application’s content and features.
-// Create user interaction with the API through a search feature, paginated gallery, or similar. This feature should use GET requests to retrieve associated data.
 // Make use of Promises and async/await syntax as appropriate.
 async function loadCategories() {
     const response = await axios.get(`https://www.wordgamedb.com/api/v1/categories`);
@@ -35,42 +20,40 @@ async function loadCategories() {
     });
 }
 loadCategories()
+
+// Create user interaction with the API through a search feature, paginated gallery, or similar. This feature should use GET requests to retrieve associated data.
 searchInput.addEventListener("change",categoryHandler)
 categorySelect.addEventListener(`change`,categoryHandler)
 //formData.addEventListener("submit", submitHandler)
 
-
+//get data from word API and generate word cloud from category
 async function categoryHandler(){
-    const response = await axios.get(`https://www.wordgamedb.com/api/v1/words/`);
-    let words = response.data;
-    let category = categorySelect.value
-    let searchCat = Search.searchHandler()
-    Words.clearWords()
-    words.forEach(word => {
-        if (word.category===category || word.category===searchCat){
-            //wordList.appendChild(Words.createWord(word.word));
-            Words.createWord(word.word)
-        } else {
-            wordCloudContain.innerHTML=`Please search for only the following categories in small caps: animal, country, food, plant, sport.`
+    try {
+        const response = await axios.get(`https://www.wordgamedb.com/api/v1/words/`);
+        let words = response.data;
+        let category = categorySelect.value
+        let searchCat = Search.searchHandler()
+        //error handling if search term is not in API data
+        let isValidCategory = words.some(word => word.category === searchCat);
+        if (!isValidCategory) {
+            wordCloudContain.innerHTML=`Please search for only the following categories: animal, country, food, plant, sport.`
+            throw new Error("This API only supports the following categories: animal, country, food, plant, sport.");
         }
-    });
-    let wordListStr = wordListItems.toString()
-    //console.log(wordListStr)
-    wordCloud(wordListStr)
+        Words.clearWords()
+        words.forEach(word => {
+            if (word.category===category || word.category===searchCat){
+                Words.createWord(word.word)
+            } 
+        });
+        let wordListStr = wordListItems.toString()
+        wordCloud(wordListStr)
+    } catch (error) {
+        console.log(error);
+    }
 }
+
 
 async function wordCloud(text) {
     const response = await axios.get(`https://quickchart.io/wordcloud?text=${text}`)
     wordCloudContain.innerHTML = response.data;
 }
-
-// function submitHandler(e) {
-//     e.preventDefault();
-//     wordCloud(categoryHandler());
-// }
-
-// function setAttributes(el, attrs) {
-//     for(let key in attrs) {
-//       el.setAttribute(key, attrs[key]);
-//     }
-//   }
