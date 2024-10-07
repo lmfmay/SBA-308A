@@ -1,6 +1,6 @@
 # SBA 308A: JavaScript Web Application
 ## Project description
-This project showcases my capability to implement advanced JavaScript tools and features in a practical manner.
+This project showcases my capability to implement advanced JavaScript tools and features in a practical manner. On this page, users can get data from one API and use it to generate a wordcloud via a second API.
 
 ### Objectives
 - Use asynchronous JavaScript tools to build a responsive web application.
