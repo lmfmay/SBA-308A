@@ -1,5 +1,7 @@
 import * as Words from "./words.mjs";
+import * as Search from "./search.mjs"
 import { wordListItems} from "./words.mjs";
+import { searchInput } from "./search.mjs";
 
 // Enable user manipulation of data within the API through the use of POST, PUT, or PATCH requests. Ensure your chosen API supports this feature before beginning.
 
@@ -13,8 +15,8 @@ import { wordListItems} from "./words.mjs";
 
 
 const categorySelect = document.getElementById(`category`);
-const wordList = document.getElementById(`wordList`);
-const formData = document.getElementById(`formData`);
+//const wordList = document.getElementById(`wordList`);
+// const formData = document.getElementById(`formData`);
 let wordCloudContain = document.getElementById(`wordCloudContain`);
 //let wordCloudImg = document.getElementById(`wordCloudImg`);
 //const fs = require('fs').promises;  // Promises-based file system API
@@ -33,19 +35,23 @@ async function loadCategories() {
     });
 }
 loadCategories()
-
+searchInput.addEventListener("change",categoryHandler)
 categorySelect.addEventListener(`change`,categoryHandler)
-formData.addEventListener("submit", submitHandler)
+//formData.addEventListener("submit", submitHandler)
+
 
 async function categoryHandler(){
     const response = await axios.get(`https://www.wordgamedb.com/api/v1/words/`);
     let words = response.data;
     let category = categorySelect.value
+    let searchCat = Search.searchHandler()
     Words.clearWords()
     words.forEach(word => {
-        if (word.category===category){
+        if (word.category===category || word.category===searchCat){
             //wordList.appendChild(Words.createWord(word.word));
             Words.createWord(word.word)
+        } else {
+            wordCloudContain.innerHTML=`Please search for only the following categories in small caps: animal, country, food, plant, sport.`
         }
     });
     let wordListStr = wordListItems.toString()
